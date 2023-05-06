@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.dicoding.mystudentdata.database.Student
 import com.dicoding.mystudentdata.database.StudentAndUniversity
 import com.dicoding.mystudentdata.database.StudentDao
+import com.dicoding.mystudentdata.database.UniversityAndStudent
 import com.dicoding.mystudentdata.helper.InitialDataSource
 
 class StudentRepository(private val studentDao: StudentDao) {
@@ -11,6 +12,9 @@ class StudentRepository(private val studentDao: StudentDao) {
 
     // call the DAO that get the Many-to-One data class
     fun getAllStudentAndUniversity(): LiveData<List<StudentAndUniversity>> = studentDao.getAllStudentAndUniversity()
+
+    // call the DAO that get the One-to-Many data class
+    fun getAllUniversityAndStudent(): LiveData<List<UniversityAndStudent>> = studentDao.getAllUniversityAndStudent()
 
     suspend fun insertAllData() {
         studentDao.insertStudent(InitialDataSource.getStudents())
