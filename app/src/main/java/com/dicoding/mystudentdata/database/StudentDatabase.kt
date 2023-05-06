@@ -3,8 +3,10 @@ package com.dicoding.mystudentdata.database
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.dicoding.mystudentdata.helper.InitialDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -13,16 +15,22 @@ import kotlinx.coroutines.launch
 // the Many-to-Many bridge database is added to `entities`
 @Database(
     entities = [Student::class, University::class, Course::class, CourseStudentCrossRef::class],
-    version = 2,
+    version = 3,
     autoMigrations = [
-        AutoMigration(from = 1, to = 2)
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3, spec = StudentDatabase.MyAutoMigration::class)
      ],
     exportSchema = true)
 abstract class StudentDatabase : RoomDatabase() {
 
+    // For DB Migration 2 to 3
+    @RenameColumn(tableName = "Student", fromColumnName = "graduate", toColumnName = "isGraduate")
+    class MyAutoMigration: AutoMigrationSpec
+
     abstract fun studentDao(): StudentDao
 
     companion object {
+
         @Volatile
         private var INSTANCE: StudentDatabase? = null
 

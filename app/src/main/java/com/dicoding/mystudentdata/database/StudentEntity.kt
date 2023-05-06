@@ -9,7 +9,7 @@ data class Student(
     val name: String,
     val univId: Int,
     @ColumnInfo(defaultValue = "false")
-    val graduate: Boolean? = false
+    val isGraduate: Boolean? = false
 )
 
 @Entity
