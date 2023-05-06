@@ -26,7 +26,10 @@ abstract class StudentDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                             StudentDatabase::class.java, "student_database")
                         .fallbackToDestructiveMigration()
+                        // get pre-populated database from Asset folder
+                        .createFromAsset("student_database.db")
                         // make callback to pre-populate database
+                        /* Not using this anymore because we are using database in assets
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -40,7 +43,7 @@ abstract class StudentDatabase : RoomDatabase() {
                                     }
                                 }
                             }
-                        })
+                        })*/
                         .build()
                 }
             }
