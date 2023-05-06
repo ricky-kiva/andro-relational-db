@@ -27,7 +27,9 @@ class StudentWithCourseAdapter :
     class WordViewHolder(private val binding: ItemStudentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StudentWithCourse) {
-            binding.tvItemName.text = data.student.name
+            binding.tvItemUniversity.text = data.studentAndUniversity.university?.name
+            binding.tvItemUniversity.visibility = View.VISIBLE
+            binding.tvItemName.text = data.studentAndUniversity.student.name
             val arrayCourse = arrayListOf<String>()
             data.course.forEach {
                 arrayCourse.add(it.name)
@@ -38,12 +40,18 @@ class StudentWithCourseAdapter :
     }
 
     class WordsComparator : DiffUtil.ItemCallback<StudentWithCourse>() {
-        override fun areItemsTheSame(oldItem: StudentWithCourse, newItem: StudentWithCourse): Boolean {
+        override fun areItemsTheSame(
+            oldItem: StudentWithCourse,
+            newItem: StudentWithCourse
+        ): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: StudentWithCourse, newItem: StudentWithCourse): Boolean {
-            return oldItem.student.name == newItem.student.name
+        override fun areContentsTheSame(
+            oldItem: StudentWithCourse,
+            newItem: StudentWithCourse
+        ): Boolean {
+            return oldItem.studentAndUniversity.student.name == newItem.studentAndUniversity.student.name
         }
     }
 }

@@ -59,7 +59,7 @@ data class CourseStudentCrossRef(
 // entity for Many-to-Many
 data class StudentWithCourse(
     @Embedded
-    val student: Student,
+    val studentAndUniversity: StudentAndUniversity,
 
     @Relation(
         parentColumn = "studentId",
