@@ -16,12 +16,5 @@ class StudentRepository(private val studentDao: StudentDao) {
     // call the DAO that get the Many-to-Many data class
     fun getAllStudentWithCourse(): LiveData<List<StudentWithCourse>> = studentDao.getAllStudentWithCourse()
 
-    suspend fun insertAllData() {
-        studentDao.insertStudent(InitialDataSource.getStudents())
-        studentDao.insertUniversity(InitialDataSource.getUniversities())
-        studentDao.insertCourse(InitialDataSource.getCourses())
 
-        // insert data from Student-Course Many-to-Many data class
-        studentDao.insertCourseStudentCrossRef(InitialDataSource.getCourseStudentRelation())
-    }
 }
