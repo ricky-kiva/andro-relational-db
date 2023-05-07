@@ -3,6 +3,7 @@ package com.dicoding.mystudentdata.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.paging.DataSource
 
 @Dao
 interface StudentDao {
@@ -20,8 +21,13 @@ interface StudentDao {
     suspend fun insertCourseStudentCrossRef(courseStudentCrossRef: List<CourseStudentCrossRef>)
 
     // use RawQuery so it supports ORDER
+    /* Not using this anymore because we are using Pager 2
     @RawQuery(observedEntities = [Student::class])
-    fun getAllStudent(query: SupportSQLiteQuery): LiveData<List<Student>>
+    fun getAllStudent(query: SupportSQLiteQuery): LiveData<List<Student>>*/
+
+    // Use Paging 2 for getAllStudent
+    @RawQuery(observedEntities = [Student::class])
+    fun getAllStudent(query: SupportSQLiteQuery): DataSource.Factory<Int, Student>
 
     // transaction to get StudentAndUniversity data class, from student
     @Transaction
