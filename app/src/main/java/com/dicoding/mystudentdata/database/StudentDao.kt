@@ -2,6 +2,7 @@ package com.dicoding.mystudentdata.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface StudentDao {
@@ -18,8 +19,9 @@ interface StudentDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCourseStudentCrossRef(courseStudentCrossRef: List<CourseStudentCrossRef>)
 
-    @Query("SELECT * from student")
-    fun getAllStudent(): LiveData<List<Student>>
+    // use RawQuery so it supports ORDER
+    @RawQuery(observedEntities = [Student::class])
+    fun getAllStudent(query: SupportSQLiteQuery): LiveData<List<Student>>
 
     // transaction to get StudentAndUniversity data class, from student
     @Transaction
